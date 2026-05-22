@@ -1,5 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
+import { KeyRound, Lock, Save, Shield, ShieldCheck, ShieldOff } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import InputError from '@/components/input-error';
@@ -7,7 +7,6 @@ import PasswordInput from '@/components/password-input';
 import TwoFactorRecoveryCodes from '@/components/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@/components/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { edit } from '@/routes/security';
 import { disable, enable } from '@/routes/two-factor';
@@ -44,7 +43,6 @@ export default function Security({
         if (prevTwoFactorEnabled.current && !twoFactorEnabled) {
             clearTwoFactorAuthData();
         }
-
         prevTwoFactorEnabled.current = twoFactorEnabled;
     }, [twoFactorEnabled, clearTwoFactorAuthData]);
 
@@ -52,154 +50,160 @@ export default function Security({
         <>
             <Head title="Configuración de seguridad" />
 
-            <h1 className="sr-only">Configuración de seguridad</h1>
+            <div className="space-y-6">
 
-            <div className="space-y-8">
-                {/* Update Password Section */}
-                <div className="rounded-2xl bg-kids-red bg-opacity-10 border-4 border-kids-red p-8 shadow-lg">
-                    <div className="flex items-center gap-3 mb-6">
-                        <span className="text-4xl">🔐</span>
+                {/* Change password */}
+                <div className="card-kids border-0 p-6 space-y-5 animate-pop-in">
+
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl gradient-red shadow-md">
+                            <Lock className="h-5 w-5 text-white" strokeWidth={2.5} />
+                        </div>
                         <div>
-                            <h2 className="text-2xl font-black text-kids-red">
-                                Actualizar Contraseña
+                            <h2 className="text-lg font-bold text-slate-800" style={{ fontFamily: 'Fredoka, sans-serif' }}>
+                                Actualizar contraseña
                             </h2>
-                            <p className="text-base font-bold text-slate-700">
-                                Asegúrate de usar una contraseña larga y segura
+                            <p className="text-sm font-semibold text-slate-500">
+                                Usa una contraseña larga y segura
                             </p>
                         </div>
                     </div>
 
                     <Form
                         {...SecurityController.update.form()}
-                        options={{
-                            preserveScroll: true,
-                        }}
-                        resetOnError={[
-                            'password',
-                            'password_confirmation',
-                            'current_password',
-                        ]}
+                        options={{ preserveScroll: true }}
+                        resetOnError={['password', 'password_confirmation', 'current_password']}
                         resetOnSuccess
-                        onError={(errors) => {
-                            if (errors.password) {
-                                passwordInput.current?.focus();
-                            }
-
-                            if (errors.current_password) {
-                                currentPasswordInput.current?.focus();
-                            }
+                        onError={(errs) => {
+                            if (errs.password) passwordInput.current?.focus();
+                            if (errs.current_password) currentPasswordInput.current?.focus();
                         }}
-                        className="space-y-6"
+                        className="space-y-4"
                     >
-                        {({ errors, processing }) => (
-                            <>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="current_password" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                        🔑 Contraseña actual
-                                    </Label>
+                        {({ errors: formErrors, processing }) => (
+                            <div className="space-y-4">
 
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <Lock className="h-4 w-4 text-kids-red" strokeWidth={2.5} />
+                                        Contraseña actual
+                                    </label>
                                     <PasswordInput
                                         id="current_password"
                                         ref={currentPasswordInput}
                                         name="current_password"
-                                        className="rounded-2xl border-3 border-kids-red p-3 text-lg font-semibold"
                                         autoComplete="current-password"
                                         placeholder="Tu contraseña actual"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-red focus:ring-2 focus:ring-kids-red/15 hover:border-slate-300 pr-10"
                                     />
-
-                                    <InputError message={errors.current_password} className="text-kids-red font-bold" />
+                                    <InputError message={formErrors.current_password} className="text-xs font-bold text-kids-red" />
                                 </div>
 
-                                <div className="grid gap-3">
-                                    <Label htmlFor="password" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                        🆕 Nueva contraseña
-                                    </Label>
-
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <KeyRound className="h-4 w-4 text-kids-red" strokeWidth={2.5} />
+                                        Nueva contraseña
+                                    </label>
                                     <PasswordInput
                                         id="password"
                                         ref={passwordInput}
                                         name="password"
-                                        className="rounded-2xl border-3 border-kids-red p-3 text-lg font-semibold"
                                         autoComplete="new-password"
-                                        placeholder="Tu nueva contraseña"
+                                        placeholder="Mínimo 8 caracteres"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-red focus:ring-2 focus:ring-kids-red/15 hover:border-slate-300 pr-10"
                                     />
-
-                                    <InputError message={errors.password} className="text-kids-red font-bold" />
+                                    <InputError message={formErrors.password} className="text-xs font-bold text-kids-red" />
                                 </div>
 
-                                <div className="grid gap-3">
-                                    <Label htmlFor="password_confirmation" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                        ✓ Confirmar contraseña
-                                    </Label>
-
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <ShieldCheck className="h-4 w-4 text-kids-red" strokeWidth={2.5} />
+                                        Confirmar contraseña
+                                    </label>
                                     <PasswordInput
                                         id="password_confirmation"
                                         name="password_confirmation"
-                                        className="rounded-2xl border-3 border-kids-red p-3 text-lg font-semibold"
                                         autoComplete="new-password"
                                         placeholder="Confirma tu nueva contraseña"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-red focus:ring-2 focus:ring-kids-red/15 hover:border-slate-300 pr-10"
                                     />
-
-                                    <InputError
-                                        message={errors.password_confirmation}
-                                        className="text-kids-red font-bold"
-                                    />
+                                    <InputError message={formErrors.password_confirmation} className="text-xs font-bold text-kids-red" />
                                 </div>
 
-                                <div className="flex items-center gap-4">
-                                    <Button
-                                        disabled={processing}
-                                        className="rounded-2xl bg-kids-yellow px-6 py-3 text-lg font-bold text-slate-900 shadow-lg hover:shadow-xl hover:animate-bounce active:shadow-md disabled:opacity-50 transition-all"
-                                        data-test="update-password-button"
-                                    >
-                                        {processing ? '⏳ Guardando...' : '💾 Guardar contraseña'}
-                                    </Button>
-                                </div>
-                            </>
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    data-test="update-password-button"
+                                    className="btn-kids w-full gradient-red text-white shadow-lg disabled:opacity-60"
+                                >
+                                    {processing ? (
+                                        <>
+                                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                            Guardando...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="h-4 w-4" strokeWidth={2.5} />
+                                            Guardar contraseña
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                         )}
                     </Form>
                 </div>
 
-                {/* Two-Factor Authentication Section */}
+                {/* Two-Factor Auth */}
                 {canManageTwoFactor && (
-                    <div className="rounded-2xl bg-kids-blue bg-opacity-10 border-4 border-kids-blue p-8 shadow-lg">
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="text-4xl">🛡️</span>
+                    <div className="card-kids border-0 p-6 space-y-5 animate-pop-in" style={{ animationDelay: '0.1s' }}>
+
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-2xl gradient-blue shadow-md">
+                                <Shield className="h-5 w-5 text-white" strokeWidth={2.5} />
+                            </div>
                             <div>
-                                <h2 className="text-2xl font-black text-kids-blue">
-                                    Autenticación de Dos Factores
+                                <h2 className="text-lg font-bold text-slate-800" style={{ fontFamily: 'Fredoka, sans-serif' }}>
+                                    Autenticación de dos factores
                                 </h2>
-                                <p className="text-base font-bold text-slate-700">
-                                    Gestiona tu seguridad adicional
+                                <p className="text-sm font-semibold text-slate-500">
+                                    Seguridad adicional para tu cuenta
                                 </p>
                             </div>
                         </div>
 
                         {twoFactorEnabled ? (
-                            <div className="flex flex-col items-start justify-start space-y-6">
-                                <div className="p-6 bg-kids-green bg-opacity-10 border-3 border-kids-green rounded-2xl">
-                                    <p className="text-base font-bold text-slate-700">
-                                        ✅ La autenticación de dos factores está <span className="text-kids-green">activada</span>.
-                                    </p>
-                                    <p className="text-sm text-slate-600 font-semibold mt-2">
-                                        Se te pedirá un código de 6 dígitos durante el inicio de sesión.
-                                    </p>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 rounded-2xl bg-kids-green-light border-2 border-kids-green p-4">
+                                    <ShieldCheck className="h-5 w-5 shrink-0 text-kids-green" strokeWidth={2.5} />
+                                    <div>
+                                        <p className="text-sm font-bold text-kids-green">2FA activado</p>
+                                        <p className="text-xs font-semibold text-slate-600">
+                                            Se pedirá un código de 6 dígitos al iniciar sesión.
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div className="relative inline">
-                                    <Form {...disable.form()}>
-                                        {({ processing }) => (
-                                            <Button
-                                                variant="destructive"
-                                                type="submit"
-                                                disabled={processing}
-                                                className="rounded-2xl bg-kids-red hover:bg-opacity-90 px-6 py-3 text-lg font-bold text-white shadow-lg transition-all"
-                                            >
-                                                {processing ? '⏳ Desactivando...' : '🔓 Desactivar 2FA'}
-                                            </Button>
-                                        )}
-                                    </Form>
-                                </div>
+                                <Form {...disable.form()}>
+                                    {({ processing: disabling }) => (
+                                        <button
+                                            type="submit"
+                                            disabled={disabling}
+                                            className="btn-kids border-2 border-kids-red bg-white text-kids-red hover:bg-kids-red-light disabled:opacity-60"
+                                        >
+                                            {disabling ? (
+                                                <>
+                                                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-kids-red border-t-transparent" />
+                                                    Desactivando...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <ShieldOff className="h-4 w-4" strokeWidth={2.5} />
+                                                    Desactivar 2FA
+                                                </>
+                                            )}
+                                        </button>
+                                    )}
+                                </Form>
 
                                 <TwoFactorRecoveryCodes
                                     recoveryCodesList={recoveryCodesList}
@@ -208,44 +212,51 @@ export default function Security({
                                 />
                             </div>
                         ) : (
-                            <div className="flex flex-col items-start justify-start space-y-6">
-                                <div className="p-6 bg-kids-yellow bg-opacity-20 border-3 border-kids-yellow rounded-2xl">
-                                    <p className="text-base font-bold text-slate-700">
-                                        ⚠️ La autenticación de dos factores está <span className="text-kids-yellow font-black">desactivada</span>.
-                                    </p>
-                                    <p className="text-sm text-slate-600 font-semibold mt-2">
-                                        Actívala para mayor seguridad en tu cuenta.
-                                    </p>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 rounded-2xl bg-kids-yellow-light border-2 border-kids-yellow p-4">
+                                    <Shield className="h-5 w-5 shrink-0 text-kids-yellow" strokeWidth={2.5} />
+                                    <div>
+                                        <p className="text-sm font-bold text-slate-700">2FA desactivado</p>
+                                        <p className="text-xs font-semibold text-slate-600">
+                                            Actívalo para mayor seguridad en tu cuenta.
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    {hasSetupData ? (
-                                        <Button
-                                            onClick={() => setShowSetupModal(true)}
-                                            className="rounded-2xl bg-kids-green hover:bg-opacity-90 px-6 py-3 text-lg font-bold text-white shadow-lg hover:animate-bounce transition-all"
-                                        >
-                                            <ShieldCheck className="mr-2" />
-                                            Continuar configuración
-                                        </Button>
-                                    ) : (
-                                        <Form
-                                            {...enable.form()}
-                                            onSuccess={() =>
-                                                setShowSetupModal(true)
-                                            }
-                                        >
-                                            {({ processing }) => (
-                                                <Button
-                                                    type="submit"
-                                                    disabled={processing}
-                                                    className="rounded-2xl bg-kids-blue hover:bg-opacity-90 px-6 py-3 text-lg font-bold text-white shadow-lg hover:animate-bounce transition-all"
-                                                >
-                                                    {processing ? '⏳ Activando...' : '🔐 Activar 2FA'}
-                                                </Button>
-                                            )}
-                                        </Form>
-                                    )}
-                                </div>
+                                {hasSetupData ? (
+                                    <Button
+                                        onClick={() => setShowSetupModal(true)}
+                                        className="btn-kids gradient-blue text-white shadow-md"
+                                    >
+                                        <ShieldCheck className="h-4 w-4" strokeWidth={2.5} />
+                                        Continuar configuración
+                                    </Button>
+                                ) : (
+                                    <Form
+                                        {...enable.form()}
+                                        onSuccess={() => setShowSetupModal(true)}
+                                    >
+                                        {({ processing: enabling }) => (
+                                            <button
+                                                type="submit"
+                                                disabled={enabling}
+                                                className="btn-kids gradient-blue text-white shadow-md disabled:opacity-60"
+                                            >
+                                                {enabling ? (
+                                                    <>
+                                                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                                        Activando...
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <ShieldCheck className="h-4 w-4" strokeWidth={2.5} />
+                                                        Activar 2FA
+                                                    </>
+                                                )}
+                                            </button>
+                                        )}
+                                    </Form>
+                                )}
                             </div>
                         )}
 
@@ -268,10 +279,5 @@ export default function Security({
 }
 
 Security.layout = {
-    breadcrumbs: [
-        {
-            title: 'Security settings',
-            href: edit(),
-        },
-    ],
+    breadcrumbs: [{ title: 'Seguridad', href: edit() }],
 };

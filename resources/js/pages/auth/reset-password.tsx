@@ -1,100 +1,92 @@
 import { Form, Head } from '@inertiajs/react';
+import { KeyRound, Lock, Mail, ShieldCheck } from 'lucide-react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
 import { update } from '@/routes/password';
 
-type Props = {
-    token: string;
-    email: string;
-};
+type Props = { token: string; email: string };
 
 export default function ResetPassword({ token, email }: Props) {
     return (
         <>
-            <Head title="Reset password" />
+            <Head title="Nueva contraseña" />
 
-            <div className="rounded-2xl bg-kids-red bg-opacity-10 p-8 border-4 border-kids-red shadow-lg">
-                <div className="mb-8 text-center">
-                    <div className="text-6xl mb-3">🔑</div>
-                    <h1 className="text-3xl font-black text-kids-red">
-                        Restablecer Contraseña
-                    </h1>
-                    <p className="text-lg font-bold text-slate-700 mt-2">
-                        Crea una nueva contraseña fuerte
-                    </p>
-                </div>
-
+            <div className="card-kids border-0 p-8 space-y-5 animate-pop-in">
                 <Form
                     {...update.form()}
                     transform={(data) => ({ ...data, token, email })}
                     resetOnSuccess={['password', 'password_confirmation']}
-                    className="space-y-6"
+                    className="space-y-4"
                 >
                     {({ processing, errors }) => (
-                        <div className="grid gap-6">
-                            <div className="grid gap-3">
-                                <Label htmlFor="email" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                    📧 Correo electrónico
-                                </Label>
-                                <Input
-                                    id="email"
+                        <div className="space-y-4">
+
+                            {/* Email (readonly) */}
+                            <div className="space-y-1.5">
+                                <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                    <Mail className="h-4 w-4 text-kids-blue" strokeWidth={2.5} />
+                                    Correo electrónico
+                                </label>
+                                <input
                                     type="email"
                                     name="email"
                                     autoComplete="email"
                                     value={email}
-                                    className="rounded-2xl border-3 border-kids-red p-4 text-lg font-bold"
                                     readOnly
+                                    className="input-kids bg-slate-50 text-slate-500 cursor-not-allowed"
                                 />
-                                <InputError
-                                    message={errors.email}
-                                    className="text-kids-red font-bold"
-                                />
+                                <InputError message={errors.email} className="text-xs font-bold text-kids-red" />
                             </div>
 
-                            <div className="grid gap-3">
-                                <Label htmlFor="password" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                    🔐 Nueva contraseña
-                                </Label>
+                            {/* New password */}
+                            <div className="space-y-1.5">
+                                <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                    <Lock className="h-4 w-4 text-kids-purple" strokeWidth={2.5} />
+                                    Nueva contraseña
+                                </label>
                                 <PasswordInput
-                                    id="password"
                                     name="password"
                                     autoComplete="new-password"
-                                    className="rounded-2xl border-3 border-kids-red p-4 text-lg font-bold"
                                     autoFocus
                                     placeholder="Mínimo 8 caracteres"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-purple focus:ring-2 focus:ring-kids-purple/15 hover:border-slate-300 pr-10"
                                 />
-                                <InputError message={errors.password} className="text-kids-red font-bold" />
+                                <InputError message={errors.password} className="text-xs font-bold text-kids-red" />
                             </div>
 
-                            <div className="grid gap-3">
-                                <Label htmlFor="password_confirmation" className="text-lg font-bold text-kids-red flex items-center gap-2">
-                                    🔒 Confirmar contraseña
-                                </Label>
+                            {/* Confirm password */}
+                            <div className="space-y-1.5">
+                                <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                    <KeyRound className="h-4 w-4 text-kids-purple" strokeWidth={2.5} />
+                                    Confirmar contraseña
+                                </label>
                                 <PasswordInput
-                                    id="password_confirmation"
                                     name="password_confirmation"
                                     autoComplete="new-password"
-                                    className="rounded-2xl border-3 border-kids-red p-4 text-lg font-bold"
                                     placeholder="Confirma tu nueva contraseña"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-purple focus:ring-2 focus:ring-kids-purple/15 hover:border-slate-300 pr-10"
                                 />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                    className="text-kids-red font-bold mt-2"
-                                />
+                                <InputError message={errors.password_confirmation} className="text-xs font-bold text-kids-red" />
                             </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="mt-4 w-full rounded-2xl bg-kids-yellow px-6 py-4 text-lg font-bold text-slate-900 shadow-lg transition-all hover:shadow-xl hover:animate-bounce active:shadow-md disabled:opacity-50"
                                 disabled={processing}
+                                className="btn-kids w-full gradient-purple text-white shadow-lg disabled:opacity-60"
                                 data-test="reset-password-button"
                             >
-                                {processing ? '⏳ Actualizando...' : '✨ Actualizar contraseña'}
-                            </Button>
+                                {processing ? (
+                                    <>
+                                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                        Actualizando...
+                                    </>
+                                ) : (
+                                    <>
+                                        <ShieldCheck className="h-4 w-4" strokeWidth={2.5} />
+                                        Actualizar contraseña
+                                    </>
+                                )}
+                            </button>
                         </div>
                     )}
                 </Form>
@@ -104,6 +96,6 @@ export default function ResetPassword({ token, email }: Props) {
 }
 
 ResetPassword.layout = {
-    title: 'Reset password',
-    description: 'Please enter your new password below',
+    title: 'Nueva contraseña',
+    description: 'Crea una contraseña segura para tu cuenta',
 };

@@ -29,7 +29,7 @@ test('new users can register', function () {
 
 // RF-01 Tests: User Registration with user_type
 
-test('user can register as docente', function () {
+test('public registration always creates padre regardless of user_type submitted', function () {
     $response = $this->post(route('register.store'), [
         'name' => 'Juan Docente',
         'email' => 'docente@ejemplo.com',
@@ -42,7 +42,7 @@ test('user can register as docente', function () {
     expect(User::where('email', 'docente@ejemplo.com')->exists())->toBeTrue();
 
     $user = User::where('email', 'docente@ejemplo.com')->first();
-    expect($user->user_type)->toBe('docente');
+    expect($user->user_type)->toBe('padre');
 
     $response->assertRedirect(route('dashboard', absolute: false));
 });
@@ -101,7 +101,7 @@ test('user cannot register without accepting terms', function () {
     $response->assertSessionHasErrors('terms');
 });
 
-test('user cannot register with invalid user type', function () {
+test('public registration ignores admin user_type and creates padre', function () {
     $response = $this->post(route('register.store'), [
         'name' => 'Usuario Inválido',
         'email' => 'invalido@ejemplo.com',
@@ -111,6 +111,10 @@ test('user cannot register with invalid user type', function () {
         'terms' => 'on',
     ]);
 
-    $response->assertSessionHasErrors('user_type');
+    $response->assertRedirect(route('dashboard', absolute: false));
+
+    $user = User::where('email', 'invalido@ejemplo.com')->first();
+    expect($user)->not->toBeNull();
+    expect($user->user_type)->toBe('padre');
 });
 

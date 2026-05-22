@@ -1,73 +1,76 @@
-// Components
 import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Mail, Send } from 'lucide-react';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
         <>
-            <Head title="Forgot password" />
+            <Head title="Recuperar contraseña" />
 
-            {status && (
-                <div className="mb-6 p-6 text-center text-lg font-bold text-white bg-kids-green rounded-2xl shadow-lg border-4 border-green-600">
-                    ✅ {status}
-                </div>
-            )}
+            <div className="card-kids border-0 p-8 space-y-5 animate-pop-in">
 
-            <div className="space-y-6 rounded-2xl bg-kids-blue bg-opacity-10 p-8 border-4 border-kids-blue shadow-lg">
-                <div className="mb-6 text-center">
-                    <div className="text-6xl mb-3">🔐</div>
-                    <h1 className="text-3xl font-black text-kids-blue">
-                        ¿Olvidaste tu Contraseña?
-                    </h1>
-                    <p className="text-lg font-bold text-slate-700 mt-2">
-                        No te preocupes, te ayudaremos a recuperarla
-                    </p>
+                {status && (
+                    <div className="flex items-center gap-3 rounded-2xl bg-kids-green-light p-4">
+                        <CheckCircle className="h-5 w-5 shrink-0 text-kids-green" strokeWidth={2.5} />
+                        <p className="text-sm font-bold text-kids-green">{status}</p>
+                    </div>
+                )}
+
+                <div className="rounded-2xl bg-kids-blue-light p-4 text-sm font-semibold text-slate-600">
+                    Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
                 </div>
 
-                <Form {...email.form()} className="space-y-6">
+                <Form {...email.form()} className="space-y-4">
                     {({ processing, errors }) => (
                         <>
-                            <div className="grid gap-3">
-                                <Label htmlFor="email" className="text-lg font-bold text-kids-blue flex items-center gap-2">
-                                    📧 Correo electrónico
-                                </Label>
-                                <Input
-                                    id="email"
+                            <div className="space-y-1.5">
+                                <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                    <Mail className="h-4 w-4 text-kids-blue" strokeWidth={2.5} />
+                                    Correo electrónico
+                                </label>
+                                <input
                                     type="email"
                                     name="email"
                                     autoComplete="off"
                                     autoFocus
                                     placeholder="tu.email@ejemplo.com"
-                                    className="rounded-2xl border-3 border-kids-blue p-4 text-lg font-bold focus:ring-2 focus:ring-kids-blue"
+                                    className="input-kids"
                                 />
-
-                                <InputError message={errors.email} className="text-kids-red font-bold" />
+                                <InputError message={errors.email} className="text-xs font-bold text-kids-red" />
                             </div>
 
-                            <div className="flex items-center justify-center">
-                                <Button
-                                    className="w-full rounded-2xl bg-kids-yellow px-6 py-4 text-lg font-bold text-slate-900 shadow-lg transition-all hover:shadow-xl hover:animate-bounce active:shadow-md disabled:opacity-50"
-                                    disabled={processing}
-                                    data-test="email-password-reset-link-button"
-                                >
-                                    {processing ? '⏳ Enviando...' : '🚀 Enviar enlace de recuperación'}
-                                </Button>
-                            </div>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="btn-kids w-full gradient-blue text-white shadow-lg disabled:opacity-60"
+                                data-test="email-password-reset-link-button"
+                            >
+                                {processing ? (
+                                    <>
+                                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                        Enviando...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Send className="h-4 w-4" strokeWidth={2.5} />
+                                        Enviar enlace
+                                    </>
+                                )}
+                            </button>
                         </>
                     )}
                 </Form>
 
-                <div className="space-y-2 text-center text-base font-bold text-slate-700">
-                    <p>¿Recordaste tu contraseña?</p>
-                    <TextLink href={login()} className="text-kids-blue hover:text-kids-green underline decoration-2 underline-offset-2">
-                        👈 Vuelve al inicio de sesión
+                <div className="text-center">
+                    <TextLink
+                        href={login()}
+                        className="inline-flex items-center gap-1.5 text-sm font-bold text-kids-purple hover:underline"
+                    >
+                        <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
+                        Volver al inicio de sesión
                     </TextLink>
                 </div>
             </div>
@@ -76,6 +79,6 @@ export default function ForgotPassword({ status }: { status?: string }) {
 }
 
 ForgotPassword.layout = {
-    title: 'Forgot password',
-    description: 'Enter your email to receive a password reset link',
+    title: '¿Olvidaste tu contraseña?',
+    description: 'Te enviaremos un enlace de recuperación',
 };

@@ -1,5 +1,6 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap');
 
+@import 'tailwindcss';
 @import 'tw-animate-css';
 
 @source '../views';
@@ -8,10 +9,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fredoka', 'Nunito', sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -19,38 +18,28 @@
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
-
     --color-popover: var(--popover);
     --color-popover-foreground: var(--popover-foreground);
-
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
-
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
-
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
-
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
-
     --color-destructive: var(--destructive);
     --color-destructive-foreground: var(--destructive-foreground);
-
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
-
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
     --color-chart-3: var(--chart-3);
     --color-chart-4: var(--chart-4);
     --color-chart-5: var(--chart-5);
-
     --color-sidebar: var(--sidebar);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -60,83 +49,92 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    /* Kids Playground Colors */
-    --color-kids-yellow: #FFD93D;
-    --color-kids-blue: #6BCBFF;
-    --color-kids-red: #FF8E8E;
-    --color-kids-green: #6FE7C8;
-    --color-kids-white: #FFF7E9;
+    /* Crea Mundo — vivid kids palette */
+    --color-kids-yellow: #F5C800;
+    --color-kids-yellow-light: #FFF8CC;
+    --color-kids-blue: #3B9EFF;
+    --color-kids-blue-light: #DAEEFF;
+    --color-kids-red: #FF4D6D;
+    --color-kids-red-light: #FFE0E6;
+    --color-kids-green: #06D6A0;
+    --color-kids-green-light: #D0F7EE;
+    --color-kids-purple: #7C3AED;
+    --color-kids-purple-light: #EDE9FE;
+    --color-kids-orange: #FF6B35;
+    --color-kids-orange-light: #FFE8DC;
+    --color-kids-pink: #F72585;
+    --color-kids-pink-light: #FFD6EC;
+    --color-kids-cream: #FEFCF7;
+    --color-kids-bg: #F0EBFF;
 }
 
+/* ── Light mode (always) ───────────────────────────────── */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    --background: oklch(0.99 0.006 80);
+    --foreground: oklch(0.13 0.02 260);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
+    --card-foreground: oklch(0.13 0.02 260);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.13 0.02 260);
+    --primary: oklch(0.56 0.24 280);
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.95 0.02 280);
+    --secondary-foreground: oklch(0.25 0.02 280);
+    --muted: oklch(0.96 0.012 80);
+    --muted-foreground: oklch(0.52 0.02 260);
+    --accent: oklch(0.95 0.025 280);
+    --accent-foreground: oklch(0.25 0.02 280);
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
+    --border: oklch(0.9 0.012 80);
+    --input: oklch(0.92 0.008 80);
+    --ring: oklch(0.56 0.24 280);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
+    --radius: 0.875rem;
+    /* Light sidebar */
+    --sidebar: oklch(0.995 0.003 280);
+    --sidebar-foreground: oklch(0.22 0.04 270);
+    --sidebar-primary: oklch(0.56 0.24 280);
     --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
+    --sidebar-accent: oklch(0.94 0.04 280);
+    --sidebar-accent-foreground: oklch(0.3 0.15 280);
+    --sidebar-border: oklch(0.9 0.03 280);
+    --sidebar-ring: oklch(0.56 0.24 280);
 }
 
+/* Force light mode — kids app never goes dark */
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
+    --background: oklch(0.99 0.006 80);
+    --foreground: oklch(0.13 0.02 260);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.13 0.02 260);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.13 0.02 260);
+    --primary: oklch(0.56 0.24 280);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.95 0.02 280);
+    --secondary-foreground: oklch(0.25 0.02 280);
+    --muted: oklch(0.96 0.012 80);
+    --muted-foreground: oklch(0.52 0.02 260);
+    --accent: oklch(0.95 0.025 280);
+    --accent-foreground: oklch(0.25 0.02 280);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.577 0.245 27.325);
+    --border: oklch(0.9 0.012 80);
+    --input: oklch(0.92 0.008 80);
+    --ring: oklch(0.56 0.24 280);
+    --sidebar: oklch(0.995 0.003 280);
+    --sidebar-foreground: oklch(0.22 0.04 270);
+    --sidebar-primary: oklch(0.56 0.24 280);
     --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --sidebar-accent: oklch(0.94 0.04 280);
+    --sidebar-accent-foreground: oklch(0.3 0.15 280);
+    --sidebar-border: oklch(0.9 0.03 280);
+    --sidebar-ring: oklch(0.56 0.24 280);
 }
 
 @layer base {
@@ -145,54 +143,167 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        font-family: 'Nunito', sans-serif;
+        background-color: #FEFCF7;
+        background-image:
+            radial-gradient(ellipse 80% 50% at 0% 0%, rgba(59, 158, 255, 0.06) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 60% at 100% 100%, rgba(124, 58, 237, 0.07) 0%, transparent 70%),
+            radial-gradient(circle, #D8CFC4 1.5px, transparent 1.5px);
+        background-size: 100% 100%, 100% 100%, 22px 22px;
+        background-attachment: fixed, fixed, fixed;
+    }
+
+    h1, h2 {
+        font-family: 'Fredoka', 'Nunito', sans-serif;
     }
 }
 
-/* Kids Playground Custom Animations */
+/* ── Animations ─────────────────────────────────────── */
 @layer utilities {
-    @keyframes floating {
-        0%, 100% {
-            transform: translateY(0px);
-        }
-        50% {
-            transform: translateY(-8px);
-        }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-12px); }
     }
 
-    .animate-floating {
-        animation: floating 2s ease-in-out infinite;
+    @keyframes float-slow {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-8px) rotate(3deg); }
     }
 
-    .hover\:animate-floating:hover {
-        animation: floating 2s ease-in-out infinite;
+    @keyframes wiggle {
+        0%, 100% { transform: rotate(-4deg); }
+        50% { transform: rotate(4deg); }
     }
 
-    /* Gradient utilities */
-    .bg-linear-to-b {
-        background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+    @keyframes pop-in {
+        0% { transform: scale(0.75); opacity: 0; }
+        65% { transform: scale(1.06); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
     }
 
-    .from-kids-blue {
-        --tw-gradient-from: #6BCBFF;
-        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(107, 203, 255, 0));
+    @keyframes slide-up {
+        from { transform: translateY(24px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
     }
 
-    .via-kids-white {
-        --tw-gradient-stops: var(--tw-gradient-from), #FFF7E9, var(--tw-gradient-to, rgba(255, 247, 233, 0));
+    @keyframes slide-in-right {
+        from { transform: translateX(24px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
     }
 
-    .to-kids-green {
-        --tw-gradient-to: #6FE7C8;
+    @keyframes glow-pulse {
+        0%, 100% { box-shadow: 0 0 12px 3px rgba(59, 158, 255, 0.3); }
+        50% { box-shadow: 0 0 28px 8px rgba(59, 158, 255, 0.55); }
     }
 
-    .bg-linear-to-br {
-        background-image: linear-gradient(135deg, var(--tw-gradient-stops));
+    @keyframes bounce-in {
+        0% { transform: scale(0.3) rotate(-6deg); opacity: 0; }
+        60% { transform: scale(1.18) rotate(2deg); opacity: 1; }
+        80% { transform: scale(0.94) rotate(-1deg); }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
-    .from-kids-red {
-        --tw-gradient-from: #FF8E8E;
-        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(255, 142, 142, 0));
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+        from { background-position: -200% center; }
+        to { background-position: 200% center; }
+    }
+
+    .animate-float { animation: float 3.5s ease-in-out infinite; }
+    .animate-float-slow { animation: float-slow 5s ease-in-out infinite; }
+    .animate-wiggle { animation: wiggle 0.5s ease-in-out infinite; }
+    .animate-pop-in { animation: pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    .animate-slide-up { animation: slide-up 0.4s ease-out both; }
+    .animate-slide-in-right { animation: slide-in-right 0.4s ease-out both; }
+    .animate-glow { animation: glow-pulse 2s ease-in-out infinite; }
+    .animate-bounce-in { animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+
+    /* ── Gradients ─────────────────────────────────────── */
+    .gradient-yellow {
+        background: linear-gradient(135deg, #F5C800 0%, #FF8C00 100%);
+    }
+    .gradient-blue {
+        background: linear-gradient(135deg, #3B9EFF 0%, #7C3AED 100%);
+    }
+    .gradient-green {
+        background: linear-gradient(135deg, #06D6A0 0%, #3B9EFF 100%);
+    }
+    .gradient-red {
+        background: linear-gradient(135deg, #FF4D6D 0%, #FF6B35 100%);
+    }
+    .gradient-purple {
+        background: linear-gradient(135deg, #7C3AED 0%, #F72585 100%);
+    }
+    .gradient-orange {
+        background: linear-gradient(135deg, #FF6B35 0%, #F5C800 100%);
+    }
+    .gradient-pink {
+        background: linear-gradient(135deg, #F72585 0%, #FF4D6D 100%);
+    }
+    .gradient-warm {
+        background: linear-gradient(135deg, #FF8C00 0%, #F72585 100%);
+    }
+
+    /* ── Cards ─────────────────────────────────────── */
+    .card-kids {
+        @apply rounded-3xl bg-white transition-all duration-200;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.055), 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+    .card-kids:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 40px rgba(124, 58, 237, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn-kids {
+        @apply inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 font-bold text-sm transition-all duration-150 active:scale-95;
+    }
+    .btn-kids:not(:disabled):hover {
+        transform: translateY(-2px);
+        filter: brightness(1.04);
+    }
+
+    /* ── Badges ─────────────────────────────────────── */
+    .badge-kids {
+        @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold;
+    }
+
+    /* ── Form inputs ─────────────────────────────────── */
+    .input-kids {
+        @apply w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all duration-150;
+        @apply focus:border-kids-blue focus:ring-3 focus:ring-kids-blue/15;
+    }
+    .input-kids:hover:not(:focus) {
+        @apply border-slate-300;
+    }
+
+    /* ── Sidebar — light theme ─────────────────────── */
+    [data-sidebar="sidebar"] {
+        background: linear-gradient(180deg, #FEFBFF 0%, #F4EEFF 100%) !important;
+        border-right: 1.5px solid #E8DCFF !important;
+    }
+
+    [data-sidebar="menu-button"][data-active="true"] {
+        background: linear-gradient(135deg, #7C3AED 0%, #3B9EFF 100%) !important;
+        color: white !important;
+        border-radius: 0.875rem !important;
+        box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35) !important;
+    }
+
+    [data-sidebar="menu-button"][data-active="true"] svg {
+        color: white !important;
+    }
+
+    [data-sidebar="group-label"] {
+        color: #7C3AED !important;
+        font-weight: 700 !important;
+        font-size: 0.65rem !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase !important;
     }
 }
-

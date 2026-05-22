@@ -36,7 +36,8 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on load...
-// initializeTheme(); // Disabled - using Light Mode only
-document.documentElement.classList.remove('dark');
-document.documentElement.style.colorScheme = 'light';
+// Force light mode always — kids app
+if (typeof document !== 'undefined') {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.style.colorScheme = 'light';
+}

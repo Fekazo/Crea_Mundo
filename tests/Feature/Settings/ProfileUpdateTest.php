@@ -18,9 +18,8 @@ test('profile information can be updated', function () {
     $response = $this
         ->actingAs($user)
         ->patch(route('profile.update'), [
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => 'test@example.com',
-            'user_type' => 'padre',
         ]);
 
     $response
@@ -40,9 +39,8 @@ test('email verification status is unchanged when the email address is unchanged
     $response = $this
         ->actingAs($user)
         ->patch(route('profile.update'), [
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => $user->email,
-            'user_type' => $user->user_type,
         ]);
 
     $response
@@ -86,67 +84,18 @@ test('correct password must be provided to delete account', function () {
     expect($user->fresh())->not->toBeNull();
 });
 
-// RF-03 Tests: Profile Management with user_type
-
-test('user can change user type from padre to docente', function () {
+test('user_type is not changeable via profile update', function () {
     $user = User::factory()->create(['user_type' => 'padre']);
 
-    expect($user->user_type)->toBe('padre');
-
-    $response = $this
+    $this
         ->actingAs($user)
         ->patch(route('profile.update'), [
-            'name' => $user->name,
-            'email' => $user->email,
-            'user_type' => 'docente',
-        ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect(route('profile.edit'));
-
-    $user->refresh();
-    expect($user->user_type)->toBe('docente');
-});
-
-test('user can change user type from docente to padre', function () {
-    $user = User::factory()->create(['user_type' => 'docente']);
-
-    $response = $this
-        ->actingAs($user)
-        ->patch(route('profile.update'), [
-            'name' => $user->name,
-            'email' => $user->email,
-            'user_type' => 'padre',
-        ]);
-
-    $user->refresh();
-    expect($user->user_type)->toBe('padre');
-});
-
-test('user type cannot be updated with invalid value', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->patch(route('profile.update'), [
-            'name' => 'Test User',
-            'email' => $user->email,
+            'name'      => $user->name,
+            'email'     => $user->email,
             'user_type' => 'admin',
-        ]);
+        ])
+        ->assertSessionHasNoErrors();
 
-    $response->assertSessionHasErrors('user_type');
-});
-
-test('user type is required when updating profile', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->patch(route('profile.update'), [
-            'name' => 'Test User',
-            'email' => $user->email,
-        ]);
-
-    $response->assertSessionHasErrors('user_type');
+    // user_type unchanged — profile update ignores it
+    expect($user->refresh()->user_type)->toBe('padre');
 });

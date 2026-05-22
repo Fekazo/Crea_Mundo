@@ -1,11 +1,8 @@
 import { Form, Head, Link, usePage } from '@inertiajs/react';
+import { CheckCircle, GraduationCap, Mail, Save, User, Users } from 'lucide-react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/delete-user';
-import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
@@ -23,188 +20,155 @@ export default function Profile({
         <>
             <Head title="Configuración de perfil" />
 
-            <div className="min-h-screen bg-kids-white p-6">
-                <h1 className="sr-only">Profile settings</h1>
+            <div className="space-y-6">
+                <div className="card-kids border-0 p-6 space-y-5 animate-pop-in">
 
-                {/* Header del Perfil */}
-                <div className="mb-8">
-                    <div className="bg-kids-green bg-opacity-10 rounded-2xl shadow-lg p-8 border-4 border-kids-green">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="text-6xl hover:animate-bounce">👤</div>
-                            <div>
-                                <h1 className="text-4xl font-black text-kids-green">
-                                    Mi Perfil
-                                </h1>
-                                <p className="text-lg font-bold text-slate-700">
-                                    Actualiza tu información aquí ✨
-                                </p>
-                            </div>
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl gradient-blue shadow-md">
+                            <User className="h-5 w-5 text-white" strokeWidth={2.5} />
                         </div>
-                    </div>
-                </div>
-
-                {/* Tarjeta de información */}
-                <div className="space-y-8">
-                    <div className="bg-kids-white rounded-2xl shadow-lg p-8 border-4 border-kids-blue">
-                        <div className="flex items-center gap-3 mb-8">
-                            <span className="text-5xl hover:animate-bounce">📝</span>
-                            <h2 className="text-3xl font-black text-kids-blue">
+                        <div>
+                            <h2 className="text-lg font-bold text-slate-800" style={{ fontFamily: 'Fredoka, sans-serif' }}>
                                 Información del perfil
                             </h2>
+                            <p className="text-sm font-semibold text-slate-500">
+                                Actualiza tu nombre, email y tipo de usuario
+                            </p>
                         </div>
-                        <p className="text-lg font-bold text-slate-700 mb-8">
-                            Actualiza tu nombre, email y tipo de usuario
-                        </p>
-
-                        <Form
-                            {...ProfileController.update.form()}
-                            options={{
-                                preserveScroll: true,
-                            }}
-                            className="space-y-8"
-                        >
-                            {({ processing, errors }) => (
-                                <>
-                                    <div className="grid gap-6">
-                                        <div className="grid gap-3">
-                                            <Label
-                                                htmlFor="name"
-                                                className="text-lg font-bold text-kids-blue flex items-center gap-2"
-                                            >
-                                                🎤 Nombre
-                                            </Label>
-
-                                            <Input
-                                                id="name"
-                                                className="rounded-2xl border-3 border-kids-blue p-4 text-lg font-bold focus:ring-2 focus:ring-kids-blue"
-                                                defaultValue={auth.user.name}
-                                                name="name"
-                                                required
-                                                autoComplete="name"
-                                                placeholder="Tu nombre completo"
-                                            />
-
-                                            <InputError
-                                                className="text-kids-red font-bold"
-                                                message={errors.name}
-                                            />
-                                        </div>
-
-                                        <div className="grid gap-3">
-                                            <Label
-                                                htmlFor="email"
-                                                className="text-lg font-bold text-kids-blue flex items-center gap-2"
-                                            >
-                                                📧 Correo electrónico
-                                            </Label>
-
-                                            <Input
-                                                id="email"
-                                                type="email"
-                                                className="rounded-2xl border-3 border-kids-blue p-4 text-lg font-bold focus:ring-2 focus:ring-kids-blue"
-                                                defaultValue={auth.user.email}
-                                                name="email"
-                                                required
-                                                autoComplete="username"
-                                                placeholder="tu.email@ejemplo.com"
-                                            />
-
-                                            <InputError
-                                                className="text-kids-red font-bold"
-                                                message={errors.email}
-                                            />
-                                        </div>
-
-                                        <div className="grid gap-3">
-                                            <Label className="text-lg font-bold text-kids-green flex items-center gap-2">
-                                                👨‍🏫 Tipo de usuario
-                                            </Label>
-                                            <RadioGroup
-                                                name="user_type"
-                                                defaultValue={auth.user.user_type || 'padre'}
-                                                className="space-y-4"
-                                            >
-                                                <div className="flex items-center space-x-3 p-4 rounded-2xl border-4 border-kids-green hover:bg-kids-green hover:bg-opacity-10 cursor-pointer transition transform hover:scale-105">
-                                                    <RadioGroupItem
-                                                        value="padre"
-                                                        id="padre"
-                                                        className="w-6 h-6"
-                                                    />
-                                                    <Label
-                                                        htmlFor="padre"
-                                                        className="font-bold text-lg cursor-pointer flex items-center gap-2 text-kids-green"
-                                                    >
-                                                        👨‍👩‍👧 Padre de familia
-                                                    </Label>
-                                                </div>
-                                                <div className="flex items-center space-x-3 p-4 rounded-2xl border-4 border-kids-yellow hover:bg-kids-yellow hover:bg-opacity-10 cursor-pointer transition transform hover:scale-105">
-                                                    <RadioGroupItem
-                                                        value="docente"
-                                                        id="docente"
-                                                        className="w-6 h-6"
-                                                    />
-                                                    <Label
-                                                        htmlFor="docente"
-                                                        className="font-bold text-lg cursor-pointer flex items-center gap-2 text-kids-yellow"
-                                                    >
-                                                        📚 Docente
-                                                    </Label>
-                                                </div>
-                                            </RadioGroup>
-                                            <InputError
-                                                message={errors.user_type}
-                                                className="text-kids-red font-bold"
-                                            />
-                                        </div>
-
-                                        {mustVerifyEmail &&
-                                            auth.user.email_verified_at === null && (
-                                                <div className="p-6 bg-kids-yellow bg-opacity-10 rounded-2xl border-4 border-kids-yellow">
-                                                    <p className="text-base font-bold text-slate-800">
-                                                        ⚠️ Tu correo no está verificado.{' '}
-                                                        <Link
-                                                            href={send()}
-                                                            as="button"
-                                                            className="text-kids-yellow underline font-black hover:text-opacity-80"
-                                                        >
-                                                            Haz clic aquí para reenviar el correo de verificación.
-                                                        </Link>
-                                                    </p>
-
-                                                    {status ===
-                                                        'verification-link-sent' && (
-                                                        <div className="mt-3 p-3 bg-kids-green bg-opacity-20 border-3 border-kids-green rounded-xl text-base font-bold text-kids-green">
-                                                            ✅ Se ha enviado un nuevo enlace de verificación a tu correo.
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                        <Button
-                                            disabled={processing}
-                                            data-test="update-profile-button"
-                                            className="mt-6 w-full rounded-2xl bg-kids-green hover:bg-opacity-90 text-white font-black text-lg py-4 shadow-lg hover:shadow-xl hover:animate-bounce transition-all active:shadow-md disabled:opacity-50"
-                                        >
-                                            {processing ? '⏳ Guardando...' : '💾 Guardar cambios'}
-                                        </Button>
-                                    </div>
-                                </>
-                            )}
-                        </Form>
                     </div>
 
-                    <DeleteUser />
+                    <Form
+                        {...ProfileController.update.form()}
+                        options={{ preserveScroll: true }}
+                        className="space-y-4"
+                    >
+                        {({ processing, errors }) => (
+                            <div className="space-y-4">
+
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <User className="h-4 w-4 text-kids-blue" strokeWidth={2.5} />
+                                        Nombre
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        defaultValue={auth.user.name}
+                                        required
+                                        autoComplete="name"
+                                        placeholder="Tu nombre completo"
+                                        className="input-kids"
+                                    />
+                                    <InputError message={errors.name} className="text-xs font-bold text-kids-red" />
+                                </div>
+
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <Mail className="h-4 w-4 text-kids-blue" strokeWidth={2.5} />
+                                        Correo electrónico
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        defaultValue={auth.user.email}
+                                        required
+                                        autoComplete="username"
+                                        placeholder="tu.email@ejemplo.com"
+                                        className="input-kids"
+                                    />
+                                    <InputError message={errors.email} className="text-xs font-bold text-kids-red" />
+                                </div>
+
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <Users className="h-4 w-4 text-kids-green" strokeWidth={2.5} />
+                                        Tipo de usuario
+                                    </label>
+                                    <RadioGroup
+                                        name="user_type"
+                                        defaultValue={(auth.user as any).user_type || 'padre'}
+                                        className="grid grid-cols-2 gap-3"
+                                    >
+                                        <label
+                                            htmlFor="padre"
+                                            className="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-slate-200 bg-white p-4 transition-all hover:border-kids-green hover:bg-kids-green-light"
+                                        >
+                                            <RadioGroupItem value="padre" id="padre" className="shrink-0" />
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl gradient-green shadow-sm">
+                                                    <Users className="h-4 w-4 text-white" strokeWidth={2} />
+                                                </div>
+                                                <span className="text-sm font-bold text-slate-700">Padre</span>
+                                            </div>
+                                        </label>
+                                        <label
+                                            htmlFor="docente"
+                                            className="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-slate-200 bg-white p-4 transition-all hover:border-kids-blue hover:bg-kids-blue-light"
+                                        >
+                                            <RadioGroupItem value="docente" id="docente" className="shrink-0" />
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl gradient-blue shadow-sm">
+                                                    <GraduationCap className="h-4 w-4 text-white" strokeWidth={2} />
+                                                </div>
+                                                <span className="text-sm font-bold text-slate-700">Docente</span>
+                                            </div>
+                                        </label>
+                                    </RadioGroup>
+                                    <InputError message={(errors as any).user_type} className="text-xs font-bold text-kids-red" />
+                                </div>
+
+                                {mustVerifyEmail && auth.user.email_verified_at === null && (
+                                    <div className="rounded-2xl border-2 border-kids-yellow bg-kids-yellow-light p-4">
+                                        <p className="text-sm font-semibold text-slate-700">
+                                            Tu correo no está verificado.{' '}
+                                            <Link
+                                                href={send()}
+                                                as="button"
+                                                className="font-bold text-kids-yellow underline"
+                                            >
+                                                Reenviar correo de verificación.
+                                            </Link>
+                                        </p>
+                                        {status === 'verification-link-sent' && (
+                                            <div className="mt-3 flex items-center gap-2">
+                                                <CheckCircle className="h-4 w-4 shrink-0 text-kids-green" strokeWidth={2.5} />
+                                                <p className="text-sm font-bold text-kids-green">
+                                                    Enlace de verificación enviado.
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    data-test="update-profile-button"
+                                    className="btn-kids w-full gradient-blue text-white shadow-lg disabled:opacity-60"
+                                >
+                                    {processing ? (
+                                        <>
+                                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                            Guardando...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="h-4 w-4" strokeWidth={2.5} />
+                                            Guardar cambios
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        )}
+                    </Form>
                 </div>
+
+                <DeleteUser />
             </div>
         </>
     );
 }
 
 Profile.layout = {
-    breadcrumbs: [
-        {
-            title: 'Configuración de perfil',
-            href: edit(),
-        },
-    ],
+    breadcrumbs: [{ title: 'Configuración de perfil', href: edit() }],
 };

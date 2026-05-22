@@ -1,7 +1,7 @@
 import { Form, usePage } from '@inertiajs/react';
+import { AlertTriangle, Lock, Trash2 } from 'lucide-react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -17,60 +17,82 @@ export default function DeleteUser() {
     usePage();
 
     return (
-        <div className="space-y-6 rounded-2xl border-4 border-kids-red bg-kids-red bg-opacity-10 p-8">
-            <div>
-                <h3 className="text-2xl font-black text-kids-red">
-                    ⚠️ Eliminar Cuenta
-                </h3>
-                <p className="text-base font-bold text-slate-700 mt-2">
-                    Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, estar seguro.
-                </p>
+        <div className="card-kids border-0 p-6 animate-pop-in" style={{ animationDelay: '0.15s' }}>
+
+            <div className="flex items-start gap-3 mb-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-kids-red-light shadow-sm">
+                    <AlertTriangle className="h-5 w-5 text-kids-red" strokeWidth={2.5} />
+                </div>
+                <div>
+                    <h2 className="text-lg font-bold text-kids-red" style={{ fontFamily: 'Fredoka, sans-serif' }}>
+                        Eliminar cuenta
+                    </h2>
+                    <p className="text-sm font-semibold text-slate-500 mt-0.5">
+                        Esta acción es permanente y no se puede deshacer.
+                    </p>
+                </div>
             </div>
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button className="rounded-2xl bg-kids-red hover:bg-opacity-90 border-3 border-red-600 px-6 py-3 text-lg font-black text-white shadow-lg hover:shadow-xl transition-all">
-                        🗑️ Eliminar Cuenta
-                    </Button>
+                    <button className="btn-kids border-2 border-kids-red bg-white text-kids-red hover:bg-kids-red-light">
+                        <Trash2 className="h-4 w-4" strokeWidth={2.5} />
+                        Eliminar mi cuenta
+                    </button>
                 </DialogTrigger>
-                <DialogContent className="rounded-2xl">
+
+                <DialogContent className="rounded-3xl border-0 shadow-2xl">
                     <DialogHeader>
-                        <DialogTitle className="text-2xl font-black text-kids-red">
-                            Eliminar Cuenta
-                        </DialogTitle>
-                        <DialogDescription className="text-base font-bold text-slate-700">
-                            Ingresa tu contraseña para confirmar la eliminación de tu cuenta.
+                        <div className="flex items-center gap-3 mb-1">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-kids-red-light">
+                                <Trash2 className="h-5 w-5 text-kids-red" strokeWidth={2.5} />
+                            </div>
+                            <DialogTitle className="text-xl font-bold text-slate-800" style={{ fontFamily: 'Fredoka, sans-serif' }}>
+                                Eliminar cuenta
+                            </DialogTitle>
+                        </div>
+                        <DialogDescription className="text-sm font-semibold text-slate-500">
+                            Ingresa tu contraseña para confirmar. Esta acción no se puede deshacer.
                         </DialogDescription>
                     </DialogHeader>
 
-                    <Form
-                        method="delete"
-                        action={destroy.url()}
-                        className="space-y-6"
-                    >
+                    <Form method="delete" action={destroy.url()} className="space-y-4">
                         {({ processing, errors }) => (
                             <>
-                                <div className="grid gap-3">
-                                    <label className="text-lg font-bold text-kids-red">🔐 Contraseña</label>
+                                <div className="space-y-1.5">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                                        <Lock className="h-4 w-4 text-kids-red" strokeWidth={2.5} />
+                                        Contraseña
+                                    </label>
                                     <PasswordInput
                                         id="password"
                                         name="password"
                                         placeholder="Ingresa tu contraseña"
                                         required
                                         autoFocus
-                                        className="rounded-2xl border-3 border-kids-red p-3 text-lg font-semibold"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none transition-all focus:border-kids-red focus:ring-2 focus:ring-kids-red/15 pr-10"
                                     />
-                                    <InputError message={errors.password} className="text-kids-red font-bold" />
+                                    <InputError message={errors.password} className="text-xs font-bold text-kids-red" />
                                 </div>
 
                                 <DialogFooter>
-                                    <Button
+                                    <button
                                         type="submit"
-                                        className="rounded-2xl bg-kids-red hover:bg-opacity-90 border-3 border-red-600 px-6 py-3 text-lg font-black text-white shadow-lg"
                                         disabled={processing}
+                                        className="btn-kids gradient-red text-white shadow-lg disabled:opacity-60"
                                     >
-                                        {processing ? '⏳ Eliminando...' : '🗑️ Eliminar Cuenta'}
-                                    </Button>
+                                        {processing ? (
+                                            <>
+                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                                Eliminando...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Trash2 className="h-4 w-4" strokeWidth={2.5} />
+                                                Eliminar cuenta
+                                            </>
+                                        )}
+                                    </button>
                                 </DialogFooter>
                             </>
                         )}
@@ -80,4 +102,3 @@ export default function DeleteUser() {
         </div>
     );
 }
-

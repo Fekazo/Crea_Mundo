@@ -12,14 +12,15 @@ export default function Heading({
             <h2
                 className={
                     variant === 'small'
-                        ? 'mb-0.5 text-base font-medium'
-                        : 'text-xl font-semibold tracking-tight'
+                        ? 'mb-0.5 text-base font-semibold'
+                        : 'text-xl font-bold tracking-tight'
                 }
+                style={{ fontFamily: 'Fredoka, Nunito, sans-serif' }}
             >
                 {title}
             </h2>
             {description && (
-                <p className="text-sm text-muted-foreground">{description}</p>
+                <p className="text-sm font-semibold text-slate-500">{description}</p>
             )}
         </header>
     );

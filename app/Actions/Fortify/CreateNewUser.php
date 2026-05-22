@@ -22,7 +22,6 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             ...$this->profileRules(),
             'password' => $this->passwordRules(),
-            'user_type' => 'required|in:docente,padre',
             'terms' => 'accepted',
         ])->validate();
 
@@ -30,7 +29,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
-            'user_type' => $input['user_type'] ?? 'padre',
+            'user_type' => 'padre',
         ]);
     }
 }

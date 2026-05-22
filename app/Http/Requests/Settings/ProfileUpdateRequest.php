@@ -17,9 +17,6 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            ...$this->profileRules($this->user()->id),
-            'user_type' => 'required|in:docente,padre',
-        ];
+        return $this->profileRules($this->user()->id);
     }
 }
